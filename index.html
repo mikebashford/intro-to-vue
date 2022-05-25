@@ -5,12 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intro to Vue</title>
+    <style>
+      .list-item {
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <h1>My app</h1>
     <div id="app">
       <ul>
-        <li v-for="item in todos">{{item}}</li>
+        <li
+          class="list-item"
+          v-for="item in todos"
+          v-on:click="item.done = !item.done"
+        >
+          <span v-if="item.done"> <s> {{item.text}} </s> </span>
+          <span v-else> {{item.text}}</span>
+        </li>
       </ul>
     </div>
     <p><i>Footer</i></p>
@@ -19,7 +31,11 @@
       let app = new Vue({
         el: "#app",
         data: {
-          todos: ["mow the lawn", "pay my bills", "clean my room"],
+          todos: [
+            { text: "mow the lawn", done: false },
+            { text: "pay my bills", done: false },
+            { text: "clean my room", done: false },
+          ],
         },
       });
     </script>
