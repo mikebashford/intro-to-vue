@@ -24,6 +24,7 @@
         <todo-list-item
           v-for="item in notDoneTodos"
           v-bind:item="item"
+          v-on:toggle="toggleItem"
         ></todo-list-item>
       </ul>
 
@@ -32,6 +33,7 @@
         <todo-list-item
           v-for="item in doneTodos"
           v-bind:item="item"
+          v-on:toggle="toggleItem"
         ></todo-list-item>
       </ul>
     </div>
@@ -40,7 +42,7 @@
     <script>
       Vue.component("todo-list-item", {
         props: ["item"],
-        template: `        
+        template: `
         <li
           class="list-item"
           v-on:click="toggleItem(item)"
@@ -50,18 +52,14 @@
 
         methods: {
           toggleItem: function (item) {
-            item.done = !item.done;
+            this.$emit("toggle", item);
           },
         },
       });
       let app = new Vue({
         el: "#app",
         data: {
-          todos: [
-            { text: "mow the lawn", done: false },
-            { text: "pay my bills", done: false },
-            { text: "clean my room", done: false },
-          ],
+          todos: [],
 
           newTodo: "clean the kitchen",
         },
@@ -88,6 +86,7 @@
         methods: {
           toggleItem: function (item) {
             item.done = !item.done;
+            this.save();
           },
           addNewTodo: function () {
             this.todos.push({
@@ -95,7 +94,18 @@
               done: false,
             });
             this.newTodo = "";
+            this.save();
           },
+
+          save: function () {
+            localStorage.setItem("todos", JSON.stringify(this.todos));
+          },
+        },
+
+        mounted: function () {
+          if (localStorage.hasOwnProperty("todos")) {
+            this.todos = JSON.parse(localStorage.getItem("todos"));
+          }
         },
       });
     </script>
