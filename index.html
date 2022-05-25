@@ -13,13 +13,18 @@
   </head>
   <body>
     <h1>My app</h1>
+
     <div id="app">
+      <div>
+        <input type="text" v-model="newTodo" />
+        <button v-on:click="addNewTodo">Add</button>
+      </div>
       <h3>Not Done Todos</h3>
       <ul>
         <li
           class="list-item"
           v-for="item in notDoneTodos"
-          v-on:click="item.done = !item.done"
+          v-on:click="toggleItem(item)"
         >
           {{item.text}}
         </li>
@@ -30,7 +35,7 @@
         <li
           class="list-item"
           v-for="item in doneTodos"
-          v-on:click="item.done = !item.done"
+          v-on:click="toggleItem(item)"
         >
           <s> {{item.text}} </s>
         </li>
@@ -47,6 +52,8 @@
             { text: "pay my bills", done: false },
             { text: "clean my room", done: false },
           ],
+
+          newTodo: "clean the kitchen",
         },
 
         computed: {
@@ -65,6 +72,19 @@
               if (item.done) out.push(item);
             }
             return out;
+          },
+        },
+
+        methods: {
+          toggleItem: function (item) {
+            item.done = !item.done;
+          },
+          addNewTodo: function () {
+            this.todos.push({
+              text: this.newTodo,
+              done: false,
+            });
+            this.newTodo = "";
           },
         },
       });
