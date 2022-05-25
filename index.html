@@ -14,14 +14,25 @@
   <body>
     <h1>My app</h1>
     <div id="app">
+      <h3>Not Done Todos</h3>
       <ul>
         <li
           class="list-item"
-          v-for="item in todos"
+          v-for="item in notDoneTodos"
           v-on:click="item.done = !item.done"
         >
-          <span v-if="item.done"> <s> {{item.text}} </s> </span>
-          <span v-else> {{item.text}}</span>
+          {{item.text}}
+        </li>
+      </ul>
+
+      <h3>Done Todos</h3>
+      <ul>
+        <li
+          class="list-item"
+          v-for="item in doneTodos"
+          v-on:click="item.done = !item.done"
+        >
+          <s> {{item.text}} </s>
         </li>
       </ul>
     </div>
@@ -36,6 +47,25 @@
             { text: "pay my bills", done: false },
             { text: "clean my room", done: false },
           ],
+        },
+
+        computed: {
+          notDoneTodos: function () {
+            let out = [];
+            for (let i = 0; i < this.todos.length; i++) {
+              let item = this.todos[i];
+              if (!item.done) out.push(item);
+            }
+            return out;
+          },
+          doneTodos: function () {
+            let out = [];
+            for (let i = 0; i < this.todos.length; i++) {
+              let item = this.todos[i];
+              if (item.done) out.push(item);
+            }
+            return out;
+          },
         },
       });
     </script>
