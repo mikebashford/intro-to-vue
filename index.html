@@ -21,29 +21,39 @@
       </div>
       <h3>Not Done Todos</h3>
       <ul>
-        <li
-          class="list-item"
+        <todo-list-item
           v-for="item in notDoneTodos"
-          v-on:click="toggleItem(item)"
-        >
-          {{item.text}}
-        </li>
+          v-bind:item="item"
+        ></todo-list-item>
       </ul>
 
       <h3>Done Todos</h3>
       <ul>
-        <li
-          class="list-item"
+        <todo-list-item
           v-for="item in doneTodos"
-          v-on:click="toggleItem(item)"
-        >
-          <s> {{item.text}} </s>
-        </li>
+          v-bind:item="item"
+        ></todo-list-item>
       </ul>
     </div>
     <p><i>Footer</i></p>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
     <script>
+      Vue.component("todo-list-item", {
+        props: ["item"],
+        template: `        
+        <li
+          class="list-item"
+          v-on:click="toggleItem(item)"
+        >
+          {{item.text}}
+        </li>`,
+
+        methods: {
+          toggleItem: function (item) {
+            item.done = !item.done;
+          },
+        },
+      });
       let app = new Vue({
         el: "#app",
         data: {
