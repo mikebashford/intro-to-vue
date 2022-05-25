@@ -8,19 +8,18 @@
   </head>
   <body>
     <h1>My app</h1>
-    <p id="app">
-      {{r}}
-      <span v-if="r > 0.5">true</span>
-      <span v-else>false</span>
-    </p>
+    <div id="app">
+      <ul>
+        <li v-for="item in todos">{{item}}</li>
+      </ul>
+    </div>
     <p><i>Footer</i></p>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
     <script>
       let app = new Vue({
         el: "#app",
         data: {
-          message: "Hello from Vue!",
-          r: 0.75,
+          todos: ["mow the lawn", "pay my bills", "clean my room"],
         },
       });
     </script>
