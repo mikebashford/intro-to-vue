@@ -8,14 +8,19 @@
   </head>
   <body>
     <h1>My app</h1>
-    <p id="app">MESSAGE: {{message}}</p>
+    <p id="app">
+      {{r}}
+      <span v-if="r > 0.5">true</span>
+      <span v-else>false</span>
+    </p>
     <p><i>Footer</i></p>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
     <script>
-      new Vue({
+      let app = new Vue({
         el: "#app",
         data: {
-          message: "Hello from Vue",
+          message: "Hello from Vue!",
+          r: 0.75,
         },
       });
     </script>
